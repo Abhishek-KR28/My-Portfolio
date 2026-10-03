@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-theme">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abhishek Kumar Ranjan — 3D Cyber Portfolio · Commerce Meets Code</title>
+  <meta name="description" content="Official 3D Animated Portfolio of Abhishek Kumar Ranjan — B.Com student building at the intersection of Python, Data Analysis, Generative AI, and Modern Web.">
+  <meta name="theme-color" content="#06080e">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Abhishek Kumar Ranjan — 3D Cyber Portfolio">
+  <meta property="og:description" content="Commerce meets code: Python, Data Analysis, Generative AI, and Modern Web Experiences.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/abhishek-profile.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;600;700;800&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Three.js Library (Local bundle with CDN fallback) -->
+  <script src="assets/three.min.js"></script>
+  <script>
+    if (typeof THREE === 'undefined') {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+    }
+  </script>
+</head>
+<body>
+  <!-- Skip to content for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- 3D WebGL Background Canvas -->
+  <canvas id="webgl-canvas" aria-hidden="true"></canvas>
+
+  <!-- Ambient Audio & Sound Synthesizer Controls HUD -->
+  <aside class="audio-hud" aria-label="Audio and HUD controls">
+    <button id="sound-toggle-btn" class="hud-pill" title="Toggle Sci-Fi SFX" aria-pressed="true">
+      <span class="hud-icon sound-icon" aria-hidden="true">🔊</span>
+      <span class="hud-label">SFX: <strong id="sound-state">ON</strong></span>
+    </button>
+    <button id="jarvis-voice-btn" class="hud-pill accent-pill" title="Trigger Jarvis AI Voice" aria-label="Activate Jarvis AI Voice Guide">
+      <span class="hud-icon pulse-dot" aria-hidden="true"></span>
+      <span class="hud-label">JARVIS 3D AI</span>
+    </button>
+    <button id="cli-toggle-btn" class="hud-pill" title="Open Terminal CLI" aria-label="Toggle Terminal Interface">
+      <span class="hud-icon" aria-hidden="true">>_</span>
+      <span class="hud-label">CLI</span>
+    </button>
+  </aside>
+
+  <!-- Navigation Bar -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="#" class="brand-logo" aria-label="Abhishek Ranjan Home">
+        <span class="logo-text">AR</span>
+        <span class="logo-slash">/</span>
+        <span class="logo-sub">3D</span>
+      </a>
+
+      <div class="availability-badge" aria-label="Status: Available for work">
+        <span class="pulse-beacon" aria-hidden="true"></span>
+        <span class="badge-text">AVAILABLE FOR WORK</span>
+      </div>
+
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="#work" class="nav-item">WORK</a>
+        <a href="#skills" class="nav-item">STACK</a>
+        <a href="#documents" class="nav-item">DOCUMENTS</a>
+        <a href="#about" class="nav-item">ABOUT</a>
+        <a href="#contact" class="nav-item nav-contact-btn">CONTACT</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper with Parallax Support -->
+  <main id="main-content" class="content-wrapper">
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero-section" aria-labelledby="hero-title">
+      <div class="hero-grid">
+
+        <!-- Left Column: Typography & CTAs -->
+        <div class="hero-content">
+          <div class="kicker-tag" data-reveal>
+            <span class="cyber-bracket">[</span>
+            PORTFOLIO · 2026 · ROHTAS, INDIA
+            <span class="cyber-bracket">]</span>
+          </div>
+
+          <h1 id="hero-title" class="hero-heading" data-reveal>
+            Commerce<br>
+            <span class="hero-gradient-text"><em>meets</em> code.</span>
+          </h1>
+
+          <p class="hero-lead" data-reveal>
+            I'm <strong>Abhishek Kumar Ranjan</strong> — a B.Com student building at the intersection of 
+            <span class="text-highlight">Python</span>, 
+            <span class="text-highlight">data analysis</span>, 
+            <span class="text-highlight">generative AI</span>, and the 
+            <span class="text-highlight">3D web</span>.
+          </p>
+
+          <div class="hero-actions" data-reveal>
+            <a href="#work" class="btn btn-primary cyber-btn" id="hero-explore-btn">
+              <span>Explore my work</span>
+              <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+            <a href="#contact" class="btn btn-ghost" id="hero-contact-btn">Get in touch</a>
+            <button class="btn btn-jarvis" id="hero-jarvis-btn" aria-label="Play Jarvis Introduction">
+              <span class="ai-sparkle">✦</span> Ask Jarvis
+            </button>
+          </div>
+
+          <!-- Live 3D AI Status Readout -->
+          <div class="system-status-panel" data-reveal>
+            <div class="status-indicator">
+              <span class="status-glow"></span>
+              <span class="status-code">SYS_ONLINE // THREE_JS_V128</span>
+            </div>
+            <div class="status-coords">
+              <span id="gyro-readout">CORE: [ ROT_X: 0.12 | ROT_Y: -0.45 ]</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: 3D Holographic Profile & Depth Card -->
+        <div class="hero-visual" data-reveal>
+          <!-- 3D Interactive Tilt Card: Profile -->
+          <div class="hologram-card tilt-element" id="profile-tilt-card" data-tilt-max="15">
+            <div class="card-inner-glow"></div>
+            <div class="holo-brackets">
+              <span class="bracket tl"></span>
+              <span class="bracket tr"></span>
+              <span class="bracket bl"></span>
+              <span class="bracket br"></span>
+            </div>
+
+            <div class="profile-photo-wrapper">
+              <div class="scanline-overlay"></div>
+              <img 
+                src="assets/abhishek-profile.png" 
+                alt="Portrait photograph of Abhishek Kumar Ranjan" 
+                class="profile-img"
+                id="profile-img"
+                loading="eager"
+              >
+              <div class="hologram-grid-layer"></div>
+            </div>
+
+            <div class="profile-card-footer">
+              <div class="profile-id-tag">
+                <span class="id-dot"></span>
+                <strong>ABHISHEK · 2026</strong>
+              </div>
+              <span class="profile-spec">CREATOR // DEV</span>
+            </div>
+          </div>
+
+          <!-- Secondary Floating Depth Card -->
+          <div class="floating-depth-card tilt-element" data-tilt-max="20" data-reveal>
+            <div class="depth-card-glow"></div>
+            <span class="depth-num">01</span>
+            <div class="depth-body">
+              <strong class="depth-title">CURIOUS<br>BY DEFAULT</strong>
+              <small class="depth-sub">Python → Data → GenAI</small>
+            </div>
+            <div class="depth-circuit" aria-hidden="true"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Scroll Down Indicator -->
+      <div class="scroll-cue" aria-hidden="true">
+        <a href="#work" class="scroll-link" aria-label="Scroll to Selected Work">
+          <span class="scroll-mouse">
+            <span class="scroll-wheel"></span>
+          </span>
+          <span class="scroll-label">SCROLL TO EXPLORE 3D SPACE</span>
+        </a>
+      </div>
+    </section>
+
+
+    <!-- SELECTED WORK SECTION -->
+    <section id="work" class="section work-section" aria-labelledby="work-title">
+      <div class="section-container">
+        <div class="section-head" data-reveal>
+          <div class="section-head-left">
+            <span class="section-index">01 // PROJECTS</span>
+            <h2 id="work-title" class="section-title">Selected Work</h2>
+          </div>
+          <div class="section-count">
+            <span class="count-badge">03 / ENTRIES</span>
+          </div>
+        </div>
+
+        <div class="cards-grid">
+
+          <!-- Card 01: Jarvis (Primary Star Project) -->
+          <article class="project-card tilt-element featured-card" data-tilt-max="12" data-reveal>
+            <div class="card-ambient-glow card-glow-cyan"></div>
+            <div class="card-top">
+              <div class="card-meta">
+                <span class="card-num">01</span>
+                <span class="card-type-tag">AI Voice Assistant</span>
+              </div>
+              <div class="card-live-dot" title="Live Project">
+                <span class="pulse-beacon beacon-cyan"></span> LIVE
+              </div>
+            </div>
+
+            <div class="card-icon-container">
+              <div class="card-icon-3d jarvis-icon" aria-hidden="true">J</div>
+              <div class="icon-orbit-ring"></div>
+            </div>
+
+            <h3 class="card-title">Jarvis</h3>
+            <p class="card-subtitle">Conversational systems interface & voice intelligence</p>
+            <p class="card-desc">
+              Custom AI assistant delivering real-time multimodal voice interactions, fluid conversational prompts, and automated system workflows.
+            </p>
+
+            <div class="card-tech-chips">
+              <span class="tech-chip">Python</span>
+              <span class="tech-chip">GenAI</span>
+              <span class="tech-chip">WebSockets</span>
+              <span class="tech-chip">Voice AI</span>
+            </div>
+
+            <div class="card-actions">
+              <a href="https://jarvis-akr.floot.app/" target="_blank" rel="noopener noreferrer" class="card-link btn btn-primary" id="open-jarvis-link">
+                <span>OPEN PROJECT</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+              <button class="btn btn-ghost launch-voice-preview" data-project="Jarvis">
+                <span>⚡ Test Voice</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Card 02: Data Analysis -->
+          <article class="project-card tilt-element" data-tilt-max="12" data-reveal>
+            <div class="card-ambient-glow card-glow-purple"></div>
+            <div class="card-top">
+              <div class="card-meta">
+                <span class="card-num">02</span>
+                <span class="card-type-tag">Learning</span>
+              </div>
+              <span class="status-pill status-in-progress">IN PROGRESS</span>
+            </div>
+
+            <div class="card-icon-container">
+              <div class="card-icon-3d math-icon" aria-hidden="true">∑</div>
+              <div class="icon-orbit-ring ring-dashed"></div>
+            </div>
+
+            <h3 class="card-title">Data Analysis</h3>
+            <p class="card-subtitle">Python · Pandas · Visual Analytics</p>
+            <p class="card-desc">
+              Extracting commerce-driven business intelligence, exploratory data pipelines, statistical modeling, and actionable chart visualization with Pandas & NumPy.
+            </p>
+
+            <div class="card-tech-chips">
+              <span class="tech-chip">Python</span>
+              <span class="tech-chip">Pandas</span>
+              <span class="tech-chip">NumPy</span>
+              <span class="tech-chip">Matplotlib</span>
+            </div>
+
+            <div class="card-actions">
+              <button class="card-link btn btn-ghost view-snippet-btn" data-modal="snippet-data">
+                <span>INSPECT WORKFLOW</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <!-- Card 03: Web Design -->
+          <article class="project-card tilt-element" data-tilt-max="12" data-reveal>
+            <div class="card-ambient-glow card-glow-amber"></div>
+            <div class="card-top">
+              <div class="card-meta">
+                <span class="card-num">03</span>
+                <span class="card-type-tag">Active</span>
+              </div>
+              <span class="status-pill status-in-progress">IN PROGRESS</span>
+            </div>
+
+            <div class="card-icon-container">
+              <div class="card-icon-3d web-icon" aria-hidden="true">↗</div>
+              <div class="icon-orbit-ring ring-dotted"></div>
+            </div>
+
+            <h3 class="card-title">Web Design</h3>
+            <p class="card-subtitle">Client-facing modern HTML · CSS · 3D builds</p>
+            <p class="card-desc">
+              Building ultra-responsive, accessible, and high-performance digital brand storefronts with modern CSS architecture, WebGL graphics, and responsive glassmorphism.
+            </p>
+
+            <div class="card-tech-chips">
+              <span class="tech-chip">Modern CSS</span>
+              <span class="tech-chip">Three.js</span>
+              <span class="tech-chip">HTML5</span>
+              <span class="tech-chip">UI / UX</span>
+            </div>
+
+            <div class="card-actions">
+              <button class="card-link btn btn-ghost view-snippet-btn" data-modal="snippet-web">
+                <span>EXPLORE CAPABILITIES</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- TECH MATRIX & SKILLS CONSTELLATION -->
+    <section id="skills" class="section skills-section" aria-labelledby="skills-title">
+      <div class="section-container">
+        <div class="section-head" data-reveal>
+          <div class="section-head-left">
+            <span class="section-index">02 // TECH STACK</span>
+            <h2 id="skills-title" class="section-title">Core Competencies</h2>
+          </div>
+          <div class="section-count">
+            <span class="count-badge">8+ TECHNOLOGIES</span>
+          </div>
+        </div>
+
+        <div class="skills-showcase" data-reveal>
+          <div class="skills-interactive-grid">
+            <div class="skill-tile tilt-element" data-tilt-max="15">
+              <div class="skill-icon-wrap" style="--accent-color: #38bdf8;">
+                <span class="skill-code">PY</span>
+              </div>
+              <h4>Python</h4>
+              <p>Automation, logic scripting & AI integrations</p>
+            </div>
+
+            <div class="skill-tile tilt-element" data-tilt-max="15">
+              <div class="skill-icon-wrap" style="--accent-color: #f59e0b;">
+                <span class="skill-code">AI</span>
+              </div>
+              <h4>Generative AI</h4>
+              <p>LLM prompt engineering & conversational assistants</p>
+            </div>
+
+            <div class="skill-tile tilt-element" data-tilt-max="15">
+              <div class="skill-icon-wrap" style="--accent-color: #10b981;">
+                <span class="skill-code">PD</span>
+              </div>
+              <h4>Pandas & Data</h4>
+              <p>Exploratory data analysis & statistical insights</p>
+            </div>
+
+            <div class="skill-tile tilt-element" data-tilt-max="15">
+              <div class="skill-icon-wrap" style="--accent-color: #8b5cf6;">
+                <span class="skill-code">3D</span>
+              </div>
+              <h4>Three.js / WebGL</h4>
+              <p>Dynamic 3D particle systems & interactive scenes</p>
+            </div>
+
+            <div class="skill-tile tilt-element" data-tilt-max="15">
+              <div class="skill-icon-wrap" style="--accent-color: #ec4899;">
+                <span class="skill-code">CS</span>
+              </div>
+              <h4>Modern CSS</h4>
+              <p>Glassmorphism, 3D transforms & fluid animations</p>
+            </div>
+
+            <div class="skill-tile tilt-element" data-tilt-max="15">
+              <div class="skill-icon-wrap" style="--accent-color: #06b6d4;">
+                <span class="skill-code">JS</span>
+              </div>
+              <h4>JavaScript ES6+</h4>
+              <p>DOM manipulation, Web APIs & interactive state</p>
+            </div>
+
+            <div class="skill-tile tilt-element" data-tilt-max="15">
+              <div class="skill-icon-wrap" style="--accent-color: #f97316;">
+                <span class="skill-code">BC</span>
+              </div>
+              <h4>Commerce & Business</h4>
+              <p>B.Com NorthCap foundation in financial logic</p>
+            </div>
+
+            <div class="skill-tile tilt-element" data-tilt-max="15">
+              <div class="skill-icon-wrap" style="--accent-color: #6366f1;">
+                <span class="skill-code">WS</span>
+              </div>
+              <h4>Realtime Voice & Audio</h4>
+              <p>Web Audio API synthesis & speech recognition</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- DOCUMENTS & CERTIFICATES SECTION -->
+    <section id="documents" class="section documents-section" aria-labelledby="documents-title">
+      <div class="section-container">
+        <div class="section-head" data-reveal>
+          <div class="section-head-left">
+            <span class="section-index">03 // CREDENTIALS</span>
+            <h2 id="documents-title" class="section-title">Certificates &amp; Documents</h2>
+          </div>
+          <div class="section-count">
+            <span class="count-badge">03 / DOCUMENTS</span>
+          </div>
+        </div>
+
+        <div class="documents-grid">
+
+          <!-- Document 01: AI Internship Completion -->
+          <article class="document-card tilt-element" data-tilt-max="10" data-reveal>
+            <div class="document-preview-box">
+              <img 
+                src="assets/ai-internship-certificate.jpeg" 
+                alt="AI Internship Completion Certificate Preview" 
+                class="doc-thumbnail"
+                loading="lazy"
+              >
+              <div class="preview-hover-overlay">
+                <button class="btn btn-zoom preview-cert-btn" data-src="assets/ai-internship-certificate.jpeg" data-title="AI Internship Completion Certificate" data-issuer="Mentorship Program on Artificial Intelligence (2026)">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                  <span>3D Inspect</span>
+                </button>
+              </div>
+            </div>
+            <div class="document-info">
+              <span class="doc-badge">CERTIFICATE · 2026</span>
+              <h3 class="doc-title">AI Internship Completion</h3>
+              <p class="doc-desc">Mentorship Program on Artificial Intelligence</p>
+              <button class="doc-action-link preview-cert-btn" data-src="assets/ai-internship-certificate.jpeg" data-title="AI Internship Completion" data-issuer="Mentorship Program on Artificial Intelligence">
+                VIEW DOCUMENT ↗
+              </button>
+            </div>
+          </article>
+
+          <!-- Document 02: AI Course Completion -->
+          <article class="document-card tilt-element" data-tilt-max="10" data-reveal>
+            <div class="document-preview-box">
+              <img 
+                src="assets/ai-course-certificate.jpeg" 
+                alt="AI Course Completion Certificate Preview" 
+                class="doc-thumbnail"
+                loading="lazy"
+              >
+              <div class="preview-hover-overlay">
+                <button class="btn btn-zoom preview-cert-btn" data-src="assets/ai-course-certificate.jpeg" data-title="AI Course Completion Certificate" data-issuer="Mentorship Program on Artificial Intelligence (2026)">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                  <span>3D Inspect</span>
+                </button>
+              </div>
+            </div>
+            <div class="document-info">
+              <span class="doc-badge">CERTIFICATE · 2026</span>
+              <h3 class="doc-title">AI Course Completion</h3>
+              <p class="doc-desc">Mentorship Program on Artificial Intelligence</p>
+              <button class="doc-action-link preview-cert-btn" data-src="assets/ai-course-certificate.jpeg" data-title="AI Course Completion" data-issuer="Mentorship Program on Artificial Intelligence">
+                VIEW DOCUMENT ↗
+              </button>
+            </div>
+          </article>
+
+          <!-- Document 03: University Admission Letter -->
+          <article class="document-card tilt-element" data-tilt-max="10" data-reveal>
+            <div class="document-preview-box pdf-preview-box">
+              <div class="pdf-hologram-seal">
+                <div class="pdf-icon-emblem">PDF</div>
+                <span class="pdf-watermark">THE NORTHCAP UNIVERSITY</span>
+              </div>
+              <div class="preview-hover-overlay">
+                <a href="assets/northcap-admission-letter.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-zoom">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                  <span>Open PDF</span>
+                </a>
+              </div>
+            </div>
+            <div class="document-info">
+              <span class="doc-badge">OFFICIAL DOCUMENT · 2026</span>
+              <h3 class="doc-title">University Admission Letter</h3>
+              <p class="doc-desc">NorthCap University · B.Com online programme</p>
+              <a href="assets/northcap-admission-letter.pdf" target="_blank" rel="noopener noreferrer" class="doc-action-link">
+                OPEN PDF ↗
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="section about-section" aria-labelledby="about-title">
+      <div class="section-container">
+        <div class="about-grid">
+          <div class="about-lead-col" data-reveal>
+            <span class="kicker-tag">[ THE SHORT VERSION ]</span>
+            <h2 id="about-title" class="about-heading">
+              Learning by<br>
+              <span class="hero-gradient-text"><em>shipping.</em></span>
+            </h2>
+          </div>
+
+          <div class="about-body-col" data-reveal>
+            <p class="about-paragraph">
+              Formal training in commerce. Self-taught in software. I pick a problem, learn the tools, and build something real. Alongside AI and data work, I take on freelance web design projects.
+            </p>
+
+            <div class="about-stats-grid">
+              <div class="stat-card">
+                <span class="stat-num">2026</span>
+                <span class="stat-label">Active Horizon</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-num">3+</span>
+                <span class="stat-label">Core Pillars (Commerce, Python, AI)</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-num">100%</span>
+                <span class="stat-label">Hands-on Execution</span>
+              </div>
+            </div>
+
+            <div class="about-quote">
+              <div class="quote-bar"></div>
+              <blockquote>
+                "Where financial logic meets programmatic scale — creating tools that speak, calculate, and inspire."
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- FOOTER / CONTACT SECTION -->
+    <footer id="contact" class="site-footer" aria-labelledby="contact-title">
+      <div class="footer-container">
+        <div class="footer-top" data-reveal>
+          <div class="footer-brand">
+            <span class="footer-logo">AKR</span>
+            <p id="contact-title" class="footer-tagline">Let's build something interesting.</p>
+            <div class="footer-status-pill">
+              <span class="pulse-beacon"></span>
+              <span>Accepting freelance web builds & AI experiments</span>
+            </div>
+          </div>
+
+          <div class="contact-grid">
+            <div class="contact-item">
+              <span class="contact-label">Email</span>
+              <a href="mailto:abhishekkar090@gmail.com" class="contact-link" id="email-link">
+                abhishekkar090@gmail.com ↗
+              </a>
+              <button class="copy-pill-btn" id="copy-email-btn" title="Copy email address" aria-label="Copy email address to clipboard">
+                <span>Copy</span>
+              </button>
+            </div>
+
+            <div class="contact-item">
+              <span class="contact-label">Location</span>
+              <strong class="contact-highlight">Rohtas, Bihar, India</strong>
+            </div>
+
+            <div class="contact-item">
+              <span class="contact-label">LinkedIn</span>
+              <a href="https://www.linkedin.com/in/abhishek-kumar-ranjan-b800b3401" target="_blank" rel="noopener noreferrer" class="contact-link">
+                /in/abhishek-kumar-ranjan-b800b3401 ↗
+              </a>
+            </div>
+
+            <div class="contact-item">
+              <span class="contact-label">GitHub</span>
+              <a href="https://github.com/Abhishek-KR28" target="_blank" rel="noopener noreferrer" class="contact-link">
+                /Abhishek-KR28 ↗
+              </a>
+            </div>
+
+            <div class="contact-item">
+              <span class="contact-label">Instagram</span>
+              <a href="https://www.instagram.com/akr_comian/?__pwa=1" target="_blank" rel="noopener noreferrer" class="contact-link">
+                @akr_comian ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>© 2026 Abhishek Kumar Ranjan. Crafted with WebGL 3D, Three.js, and Modern CSS.</p>
+          <div class="footer-credit-links">
+            <span class="holo-tag">PORTFOLIO v2.0 // 3D EDITION</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- MODAL: Modern <dialog> for High-Res 3D Certificate Inspection -->
+  <dialog id="cert-dialog" class="modern-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <div class="dialog-title-group">
+          <span class="dialog-badge">CERTIFICATE VERIFICATION // 2026</span>
+          <h3 id="dialog-title" class="dialog-title">AI Certificate</h3>
+          <p id="dialog-subtitle" class="dialog-subtitle">Mentorship Program</p>
+        </div>
+        <button id="dialog-close-btn" class="dialog-close-btn" aria-label="Close dialog">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="dialog-body">
+        <div class="cert-modal-viewport">
+          <img id="dialog-img" src="" alt="Certificate expanded view" class="dialog-cert-image">
+          <div class="dialog-holo-shimmer"></div>
+        </div>
+      </div>
+
+      <div class="dialog-footer">
+        <a id="dialog-download-link" href="" target="_blank" class="btn btn-primary" download>
+          <span>Open Full Resolution ↗</span>
+        </a>
+        <button id="dialog-dismiss-btn" class="btn btn-ghost">Dismiss</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- MODAL: Jarvis 3D AI HUD Voice Assistant Overlay -->
+  <dialog id="jarvis-dialog" class="modern-dialog jarvis-hud-dialog" aria-labelledby="jarvis-dialog-title">
+    <div class="dialog-content jarvis-hud-content">
+      <div class="dialog-header">
+        <div class="dialog-title-group">
+          <span class="hud-tag">JARVIS AI INTERFACE // VER 3.0</span>
+          <h3 id="jarvis-dialog-title" class="dialog-title">Jarvis Voice AI Core</h3>
+        </div>
+        <button id="jarvis-close-btn" class="dialog-close-btn" aria-label="Close Jarvis AI HUD">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="dialog-body jarvis-dialog-body">
+        <!-- Interactive 3D Audio Visualizer Canvas -->
+        <div class="jarvis-reactor-center">
+          <div class="reactor-ring outer-ring"></div>
+          <div class="reactor-ring middle-ring"></div>
+          <div class="reactor-core">
+            <span class="reactor-glow"></span>
+            <span class="reactor-label">JARVIS</span>
+          </div>
+          <canvas id="voice-wave-canvas" width="400" height="100" class="voice-wave-canvas" aria-label="Voice frequency visualizer"></canvas>
+        </div>
+
+        <div class="jarvis-terminal-transcript">
+          <div class="terminal-line"><span class="term-prompt">JARVIS:</span> <span id="jarvis-speech-text">"Systems calibrated. I am Jarvis, personal AI agent for Abhishek Kumar Ranjan. How may I direct your exploration?"</span></div>
+        </div>
+
+        <div class="jarvis-commands-tray">
+          <button class="jarvis-cmd-chip" data-cmd="intro">
+            <span>🎙 Who is Abhishek?</span>
+          </button>
+          <button class="jarvis-cmd-chip" data-cmd="projects">
+            <span>🚀 Highlight Projects</span>
+          </button>
+          <button class="jarvis-cmd-chip" data-cmd="credentials">
+            <span>📜 Verify Credentials</span>
+          </button>
+          <button class="jarvis-cmd-chip" data-cmd="contact">
+            <span>📡 Establish Contact</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- DRAWER: Interactive Cyberpunk CLI Terminal -->
+  <div id="cli-drawer" class="cli-drawer" aria-hidden="true" role="region" aria-label="Interactive Command Line">
+    <div class="cli-drawer-header">
+      <div class="cli-title-wrap">
+        <span class="cli-status-dot"></span>
+        <span class="cli-title">bash // akr@jarvis-system:~$</span>
+      </div>
+      <button id="cli-close-btn" class="cli-close-btn" aria-label="Close Terminal">✕</button>
+    </div>
+    <div class="cli-body">
+      <div id="cli-output" class="cli-output">
+        <div class="cli-line banner-line">⚡ Abhishek Kumar Ranjan [3D Terminal Engine]</div>
+        <div class="cli-line">Type <span class="cmd-help">help</span> to list available commands. Try <span class="cmd-help">skills</span>, <span class="cmd-help">projects</span>, or <span class="cmd-help">contact</span>.</div>
+      </div>
+      <form id="cli-form" class="cli-form" onsubmit="return false;">
+        <span class="cli-prompt">visitor@akr:~$</span>
+        <input type="text" id="cli-input" class="cli-input" autocomplete="off" spellcheck="false" placeholder="type a command...">
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript Scripts -->
+  <script src="three-scene.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
